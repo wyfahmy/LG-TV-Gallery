@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   const slideA = document.createElement("img");
   const slideB = document.createElement("img");
-  const { imageList, imageDuration, transitionSpeed, objectFitMode } = SlideshowSettings;
+  const { imageList, imageDuration, transitionSpeed, objectFitMode, randomizeOrder, crossfadeOverlap } = SlideshowSettings;
+  let images = [...imageList];
+  if (randomizeOrder) {
+    images.sort(() => Math.random() - 0.5);
+  }
   let i = 0, active = slideA, inactive = slideB;
 
   slideA.style.position = slideB.style.position = "absolute";
@@ -17,16 +21,18 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.appendChild(slideA);
   document.body.appendChild(slideB);
 
-  active.src = imageList[i];
-  i = (i + 1) % imageList.length;
+  active.src = images[i];
+  i = (i + 1) % images.length;
 
   setInterval(() => {
-    inactive.src = imageList[i];
-    i = (i + 1) % imageList.length;
+    inactive.src = images[i];
+    i = (i + 1) % images.length;
     inactive.onload = () => {
-      active.style.opacity = 0;
-      inactive.style.opacity = 1;
-      [active, inactive] = [inactive, active];
+      setTimeout(() => {
+        active.style.opacity = 0;
+        inactive.style.opacity = 1;
+        [active, inactive] = [inactive, active];
+      }, (1 - crossfadeOverlap) * imageDuration);
     };
   }, imageDuration);
 });
