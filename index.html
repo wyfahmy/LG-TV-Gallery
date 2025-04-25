@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TV Background v0.1</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+    img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      background: black;
+    }
+  </style>
+</head>
+<body>
+  <img id="slide" src="" alt="Background">
+  <script src="settings.js"></script>
+  <script src="slideshow.js"></script>
+</body>
+</html>
